@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import styles from '../Styles/home.module.css';
 import API from '../Utils';
 import Card from '../Components/Card';
+import Loader from '../Components/Loader';
 const Home = () => {
 	const [input, setInput] = useState('');
 	const [recipies, setRecipies] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const getRecipies = async () => {
 		try {
 			const config = {
@@ -40,8 +42,10 @@ const Home = () => {
 		if (response.success) {
 			setRecipies(response.data.hits);
 		}
-		console.log(response);
+		// console.log(response);
+		setLoading(false);
 	};
+	if (loading) return <Loader />;
 	return (
 		<div>
 			<h1>Recipe Search</h1>
@@ -51,7 +55,10 @@ const Home = () => {
 				value={input}
 				onChange={(e) => setInput(e.target.value)}
 				onKeyPress={(e) => {
-					if (e.key === 'Enter') fetchRecipies();
+					if (e.key === 'Enter') {
+						setLoading(true);
+						fetchRecipies();
+					}
 				}}
 				className={styles.search}
 			/>
