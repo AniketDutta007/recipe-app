@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../Styles/home.module.css';
 import API from '../Utils';
-import Card from '../Components/Card';
-import Loader from '../Components/Loader';
+import { Card, Loader } from '../Components';
 const Home = () => {
 	const [input, setInput] = useState('');
 	const [recipies, setRecipies] = useState([]);
